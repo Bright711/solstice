@@ -1,0 +1,20 @@
+# This MVP has no external service dependencies (see README "Why SQLite /
+# in-process queue" for the reasoning) so docker-compose here simply
+# containerizes the app itself for a one-command local run. If you swap in
+# PostgreSQL + Redis/BullMQ per the original recommendation, add `postgres`
+# and `redis` services here and point DATABASE_URL / REDIS_URL at them.
+services:
+  app:
+    build: .
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - WEBHOOK_SECRET=dev-webhook-secret
+      - WEBHOOK_URL=http://localhost:4000/api/webhooks/badge-printer
+      - DB_PATH=/app/data/solstice.db
+    volumes:
+      - solstice-data:/app/data
+
+volumes:
+  solstice-data:

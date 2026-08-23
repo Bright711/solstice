@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Solstice — Conference Check-In</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">S</span>
+    <div class="brand-text">
+      <div class="brand-name">Solstice Events</div>
+      <div class="brand-sub">Conference Check-In</div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="kiosk">Kiosk</button>
+    <button class="tab-btn" data-tab="admin">Operations</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ KIOSK VIEW ============ -->
+  <section id="view-kiosk" class="view active">
+    <div class="kiosk-grid">
+
+      <div class="panel scan-panel">
+        <h1>Scan attendee QR code</h1>
+        <p class="muted">Select a test attendee to simulate a scan, or use a connected scanner.</p>
+
+        <div class="test-buttons" id="testButtons"></div>
+
+        <div class="simulate-row">
+          <label for="simulateSelect">Simulate outcome</label>
+          <select id="simulateSelect">
+            <option value="success">Printer success (default)</option>
+            <option value="failure">Printer failure</option>
+            <option value="delayed">Delayed webhook (~4s)</option>
+            <option value="duplicate_webhook">Duplicate webhook callback</option>
+            <option value="out_of_order">Out-of-order callback</option>
+          </select>
+        </div>
+
+        <form id="manualScanForm" class="manual-scan">
+          <input type="text" id="manualQr" placeholder="Or type a QR code, e.g. ATT-002" />
+          <button type="submit">Scan</button>
+        </form>
+      </div>
+
+      <div class="panel result-panel">
+        <div id="resultEmpty" class="result-empty">
+          <div class="result-empty-badge">—</div>
+          <p><strong>Ready to check in</strong></p>
+          <p class="muted">Scan an attendee QR code to begin.</p>
+        </div>
+
+        <div id="resultCard" class="result-card hidden">
+          <div class="result-header">
+            <div>
+              <div class="attendee-name" id="rName">—</div>
+              <div class="attendee-email" id="rEmail">—</div>
+            </div>
+            <div class="status-pill" id="rStatusPill">—</div>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Badge</span>
+            <span id="rBadgeText">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Print job</span>
+            <span id="rJobId">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Message</span>
+            <span id="rMessage">—</span>
+          </div>
+
+          <div class="progress-track" id="progressTrack">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ ADMIN VIEW ============ -->
+  <section id="view-admin" class="view">
+    <div class="admin-toolbar">
+      <h1>Operations dashboard</h1>
+      <div class="admin-actions">
+        <button id="refreshBtn" class="btn-secondary">Refresh</button>
+        <button id="resetBtn" class="btn-secondary danger">Reset demo data</button>
+      </div>
+    </div>
+
+    <div class="stat-row" id="statRow"></div>
+
+    <div class="admin-columns">
+      <div class="panel">
+        <h2>Attendees</h2>
+        <table class="data-table" id="attendeeTable">
+          <thead>
+            <tr><th>Attendee</th><th>Email</th><th>Status</th><th>Print job</th><th>Updated</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="side-column">
+        <div class="panel">
+          <h2>Queue</h2>
+          <div id="queueInfo" class="mono-block"></div>
+        </div>
+        <div class="panel">
+          <h2>Recent print jobs</h2>
+          <div id="recentJobs" class="mono-block"></div>
+        </div>
+        <div class="panel">
+          <h2>Recent webhook events</h2>
+          <div id="recentEvents" class="mono-block"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
