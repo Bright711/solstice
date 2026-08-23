@@ -1,5 +1,4 @@
-// tests/api.test.js
-// Runs against a live instance of the server on an isolated test DB/port.
+
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
